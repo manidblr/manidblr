@@ -66,28 +66,7 @@ db_create_file_dest      = "/rdsdbdata/db"
 https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Oracle.Procedural.Importing.html#Oracle.Procedural.Importing.DataPump.S3
 
 Export :
-DECLARE
-  v_hdnl NUMBER;
-BEGIN
-  v_hdnl := DBMS_DATAPUMP.OPEN(operation => 'EXPORT', job_mode => 'SCHEMA', job_name=>null);
-  DBMS_DATAPUMP.ADD_FILE( 
-    handle    => v_hdnl, 
-    filename  => 'sample.dmp', 
-    directory => 'DATA_PUMP_DIR', 
-    filetype  => dbms_datapump.ku$_file_type_dump_file);
-  DBMS_DATAPUMP.ADD_FILE( 
-    handle    => v_hdnl, 
-    filename  => 'sample_exp.log', 
-    directory => 'DATA_PUMP_DIR', 
-    filetype  => dbms_datapump.ku$_file_type_log_file);
-  DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'SCHEMA_EXPR','IN (''SCHEMA_1'')');
-  DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'EXCLUDE_NAME_EXPR',
-    q'[IN (SELECT NAME FROM sys.OBJ$ WHERE TYPE# IN (66,67,74,79,59,62,46) AND OWNER# IN 
-      (SELECT USER# FROM SYS.USER$ WHERE NAME IN 
-        ('RDSADMIN','SYS','SYSTEM','RDS_DATAGUARD','RDSSEC')))]','PROCOBJ');
-  DBMS_DATAPUMP.START_JOB(v_hdnl);
-END;
-/
+GRANT UNLIMITED TABLESPACE TO "HR"
 
 
 Import:
