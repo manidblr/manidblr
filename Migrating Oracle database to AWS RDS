@@ -9,7 +9,7 @@ s3://dbamani29-oradump
 Create AWS Policy: Grant Listbucket, readbucket, writebuket to the policy
 arn:aws:iam::473371257295:policy/rds-s3-integration-policy
 Reference: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/oracle-s3-integration.html
-
+Add ARN and mention "*" in object list to include all the objects.
 
 Create AWS Role:  Assign the policy to the role
 arn:aws:iam::473371257295:role/rds-s3-integration-role
@@ -29,6 +29,24 @@ Create new group oracle-se2-19-S3 and select S3_INTEGRATION option.
 
 Modify the RDS instance rds-ora1-19c and apply the options group oracle-se2-19-S3 
 
+
+Downloading files from an Amazon S3 bucket to an Oracle DB instance
+SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
+      p_bucket_name    =>  'dbamani29-oradump',       
+      p_directory_name =>  'DATA_PUMP_DIR') 
+   AS TASK_ID FROM DUAL;  
+Output Task ID: 1628351568375-28
+
+Below is to download from a specific folder.
+SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
+      p_bucket_name    =>  'mys3bucket', 
+      p_s3_prefix      =>  'myfolder/', 
+      p_directory_name =>  'DATA_PUMP_DIR') 
+   AS TASK_ID FROM DUAL; 
+   
+ 
+ View the result using below query.
+ SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1628351568375-28.log')); 
 
 
 
