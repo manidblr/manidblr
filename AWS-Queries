@@ -12,3 +12,4 @@ Short Term Goal: Learn more machine learning concepts and implement Oracle Auton
 Request opatch lsinventory? How does AWS manage one-off patches.
 Does AWS frequently review any new bugs/one-off patches relased by Oracle? How does AWS ensure that existing RDS instances are not hit by any bugs?
 
+RDS database for Non-Prod is running NOARCHIVELOG mode. How does the recovery work?
