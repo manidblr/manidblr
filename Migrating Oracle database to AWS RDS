@@ -34,3 +34,4 @@ Modify the RDS instance rds-ora1-19c and apply the options group oracle-se2-19-S
 
 To Do: Verify OEM Agent Option
 Verify Upgrade process
+Restore from S3.
