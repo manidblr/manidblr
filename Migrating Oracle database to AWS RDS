@@ -1,0 +1,31 @@
+Create an export dumpfile
+Create an S3 bucket
+
+Amazon Resource Name (ARN)
+arn:aws:s3:::dbamani29-oradump
+s3://dbamani29-oradump
+
+
+Create AWS Policy: Grant Listbucket, readbucket, writebuket to the policy
+arn:aws:iam::473371257295:policy/rds-s3-integration-policy
+Reference: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/oracle-s3-integration.html
+
+
+Create AWS Role:  Assign the policy to the role
+arn:aws:iam::473371257295:role/rds-s3-integration-role
+
+
+Aassociate your IAM role with your DB instance:
+Goto RDS: Under "Connectivity & Security Rules", 
+"Manage IAM Roles",
+Enter "rds-s3-integration-role" in text box, and select the Feature "S3_INTEGRATION"
+
+
+Configure an option group for Amazon S3 integration:
+Select Existing Options Group:
+default:oracle-se2-19.     Unable to edit existing Options Group. Hence creating a new one.
+Create new group oracle-se2-19-S3 and select S3_INTEGRATION option.
+
+
+Modify the RDS instance rds-ora1-19c and apply the options group oracle-se2-19-S3 
+
