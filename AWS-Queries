@@ -1,1 +1,9 @@
-Why are the container options enabled in RDS? What benefits have you observed?
+Why is the container option enabled in RDS? What benefits have Amazon observed?
+Can we save costs with RDS?
+
+By Default RDS saves audit logs to OS.
+
+
+
+AWS: Why Amazon:
+Short Term Goal: Learn more machine learning concepts and implement Oracle Autonomous database features in AWS RDS.
