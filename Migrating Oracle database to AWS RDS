@@ -29,3 +29,8 @@ Create new group oracle-se2-19-S3 and select S3_INTEGRATION option.
 
 Modify the RDS instance rds-ora1-19c and apply the options group oracle-se2-19-S3 
 
+
+
+
+To Do: Verify OEM Agent Option
+Verify Upgrade process
