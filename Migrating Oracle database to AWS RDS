@@ -48,8 +48,85 @@ SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
  View the result using below query.
  SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','dbtask-1628351568375-28.log')); 
 
-
-
 To Do: Verify OEM Agent Option
 Verify Upgrade process
 Restore from S3.
+
+
+# Creating tablespace in AWS RDS:
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.Oracle.CommonDBATasks.Database.html
+CREATE TABLESPACE USERS_TS DATAFILE SIZE 1G AUTOEXTEND ON MAXSIZE 10G;
+This will create a regular tablespace with datafile as below. We dont have to give data file name. Oracle 
+/rdsdbdata/db/ORCL_A/datafile/o1_mf_users_ts_jjxkfv5z_.dbf
+alert_ORCL.log
+db_create_file_dest      = "/rdsdbdata/db"
+
+
+#Exporting and importing using S3.
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Oracle.Procedural.Importing.html#Oracle.Procedural.Importing.DataPump.S3
+
+Export :
+DECLARE
+  v_hdnl NUMBER;
+BEGIN
+  v_hdnl := DBMS_DATAPUMP.OPEN(operation => 'EXPORT', job_mode => 'SCHEMA', job_name=>null);
+  DBMS_DATAPUMP.ADD_FILE( 
+    handle    => v_hdnl, 
+    filename  => 'sample.dmp', 
+    directory => 'DATA_PUMP_DIR', 
+    filetype  => dbms_datapump.ku$_file_type_dump_file);
+  DBMS_DATAPUMP.ADD_FILE( 
+    handle    => v_hdnl, 
+    filename  => 'sample_exp.log', 
+    directory => 'DATA_PUMP_DIR', 
+    filetype  => dbms_datapump.ku$_file_type_log_file);
+  DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'SCHEMA_EXPR','IN (''SCHEMA_1'')');
+  DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'EXCLUDE_NAME_EXPR',
+    q'[IN (SELECT NAME FROM sys.OBJ$ WHERE TYPE# IN (66,67,74,79,59,62,46) AND OWNER# IN 
+      (SELECT USER# FROM SYS.USER$ WHERE NAME IN 
+        ('RDSADMIN','SYS','SYSTEM','RDS_DATAGUARD','RDSSEC')))]','PROCOBJ');
+  DBMS_DATAPUMP.START_JOB(v_hdnl);
+END;
+/
+
+
+Import:
+##DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'SCHEMA_EXPR','IN (''SCHEMA_1'')');
+
+
+DECLARE
+  v_hdnl NUMBER;
+BEGIN
+  v_hdnl := DBMS_DATAPUMP.OPEN( 
+    operation => 'IMPORT', 
+    job_mode  => 'SCHEMA', 
+    job_name  => null);
+  DBMS_DATAPUMP.ADD_FILE( 
+    handle    => v_hdnl, 
+    filename  => 'Oracle11g_Sample_Schemas.zip', 
+    directory => 'DATA_PUMP_DIR', 
+    filetype  => dbms_datapump.ku$_file_type_dump_file);
+  DBMS_DATAPUMP.ADD_FILE( 
+    handle    => v_hdnl, 
+    filename  => 'import_Oracle11g_Sample_Schemas.log', 
+    directory => 'DATA_PUMP_DIR', 
+    filetype  => dbms_datapump.ku$_file_type_log_file);
+   DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'SCHEMA_EXPR','IN (''HR'')');
+  DBMS_DATAPUMP.START_JOB(v_hdnl);
+END;
+/ 
+
+Example 2:
+Export:
+declare
+ handle number;
+begin
+ handle := dbms_datapump.open('EXPORT','SCHEMA');
+ dbms_datapump.add_file(handle,'SCOTT3.DMP','DUMPDIR');
+ dbms_datapump.metadata_filter(handle,'SCHEMA_EXPR','= ''SCOTT''');
+ dbms_datapump.set_parallel(handle,4);
+ dbms_datapump.start_job(handle);
+ dbms_datapump.detach(handle);
+end;
+/ 
+
