@@ -13,3 +13,15 @@ Request opatch lsinventory? How does AWS manage one-off patches.
 Does AWS frequently review any new bugs/one-off patches relased by Oracle? How does AWS ensure that existing RDS instances are not hit by any bugs?
 
 RDS database for Non-Prod is running NOARCHIVELOG mode. How does the recovery work?
+
+Weakness: 
+Curiosity : Due to my curiosity, I often spend too much of time trying to identify how a particular tool or package works. For instance, we know that a python module called numpy is used to create and manage arrays. But, I spend more time trying to understand how the package is written.
+I have spent a lot of time how files can be copied from S3 to Server where RDS is running. Due to which I get delayed in delivery sometimes.
+
+Strength:
+
+
+Biggest Failure:
+
+Have to disagree with manager: 
+Release archive file dest.
