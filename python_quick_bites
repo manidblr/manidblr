@@ -1,0 +1,15 @@
+
+
+Add a help topic about your function.
+def least_difference(a,b,c):
+  """
+  This function returns least absolute difference of three numbers
+  >>> least_difference(7,9,13)
+  2
+  """
+  r1 = abs(a-b)
+  r2 = abs(b-c)
+  r3 = abs(c-a)
+  return min(r1,r2,r3)
+  
+  
