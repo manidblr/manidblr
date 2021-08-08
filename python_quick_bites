@@ -34,3 +34,34 @@ Evaluation precedence:
 And is evaluated First. 
 
 True or True and False
+
+##################
+Strings:
+datestr = '1956-01-31'
+yyyy, mm, dd = datestr.split('-')
+print(yyyy,mm,dd)
+1956 01 31
+
+
+"/".join([yyyy,mm,dd])
+'1956/01/31'
+
+
+Formatting a string(Python 3)
+"{}, you will always be my {}th planet".format("Pluto",9)
+
+planet="Pluto"
+position=9
+print("{}, you will always be my {}th planet".format(planet,position))
+
+
+"{} weighs about {:.2} kilograms({:.3%} of Earths mass). It is home to {:,} plutonians".format(planet,pluto_mass, pluto_mass/earth_mass, plutonians)
+'Pluto weighs about 1.3e+22 kilograms(0.218% of Earths mass). It is home to 52,910,390 plutonians'
+
+# Referring to format() arguments by index, starting from 0
+s = """
+{0} is a planet.
+{0} is not a {1}
+!{0} Not planet
+""".format('Pluto','Dwarf Planet')
+print(s)
