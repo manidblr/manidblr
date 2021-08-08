@@ -1,0 +1,71 @@
+Lists. 
+Ex: planets_list = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+To add: 
+planets_list.append('Pluto')
+planets[3] = 'Malacandra'
+
+
+Tuples:
+planets_tuple = ('Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune')
+You cannot add any more and modify exisitng entries.
+Only two functions: 
+>>> planets_tuple.count('Earth')
+1
+>>> planets_tuple.index('Earth',0,20) ## Gives only first occurrence even though multiple entries are found.
+2
+>>>
+
+>>> t1 = ('a',1,[4,5])
+>>> t1[2]
+[4, 5]
+
+
+
+Lists: Square brackets and mutable. Various data types allowed.
+Tuples: Round brackets and immutable. Various data types allowed.
+Dictionaries:
+Set:
+
+
+None is an inbuilt key word. It is infact, a class object.
+    ll = len(L) 
+    return L[1] if ll > 2 else None
+
+
+For and If techniques:
+for c in s:
+    print(c,end="") if c.isupper() else print("",end="")
+
+Below is called List comprehension
+sq_list = [n**2 for n in range(1,11)]
+
+
+Combine If & For short hand.
+planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+
+short_planets = [ planet for planet in planets if len(planet) < 6]
+print(short_planets)
+['Venus', 'Earth', 'Mars']
+
+loud_short_planets = [planet.upper() + '!' for planet in planets if len(planet) < 6]
+loud_short_planets
+['VENUS!', 'EARTH!', 'MARS!']
+
+Splitting the above code into multiple lines
+[
+    planet.upper() + "!"
+    for planet in planets
+    if len(planet) < 6
+]
+
+
+L = [1, 2, 3, 4],
+thresh = 2 or 3 .. what ever number.
+Return [False, False, True, True].
+
+[ element > thresh for element in L]
+
+
+
+Python Key words to avoid:
+None , pass
