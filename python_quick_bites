@@ -15,3 +15,22 @@ def least_difference(a,b,c):
   
   
 The docstring is a triple-quoted string (which may span multiple lines) that comes immediately after the header of a function. When we call help() on a function, it shows the docstring.
+
+
+Python allows us to define non-returning functions like print(), help() etc.. The result of calling them is the special value None.
+Default argument values.
+def print_hello(who="Ajay"):
+    print("Hello my friend ",who)
+    
+
+
+
+Round with negative integer.
+round(23.12345,-1) will round it to 20.0
+round(123.12345,-2) will round it to 100.0
+
+
+Evaluation precedence:
+And is evaluated First. 
+
+True or True and False
