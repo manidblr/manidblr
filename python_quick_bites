@@ -1,6 +1,7 @@
 
 
 Add a help topic about your function.
+
 def least_difference(a,b,c):
   """
   This function returns least absolute difference of three numbers
@@ -13,3 +14,4 @@ def least_difference(a,b,c):
   return min(r1,r2,r3)
   
   
+The docstring is a triple-quoted string (which may span multiple lines) that comes immediately after the header of a function. When we call help() on a function, it shows the docstring.
