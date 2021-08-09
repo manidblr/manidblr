@@ -1,0 +1,23 @@
+A researcher has gathered thousands of news articles. But she wants to focus her attention on articles including a specific word. Complete the function below to help her filter her list of articles.
+
+Your function should meet the following criteria:
+
+Do not include documents where the keyword string shows up only as a part of a larger word. For example, if she were looking for the keyword “closed”, you would not include the string “enclosed.”
+She does not want you to distinguish upper case from lower case letters. So the phrase “Closed the case.” would be included when the keyword is “closed”
+Do not let periods or commas affect what is matched. “It is closed.” would be included when the keyword is “closed”. But you can assume there are no other types of punctuation.
+
+def word_search(doc_list, keyword):
+    indeces = []
+    for i, document in enumerate(doc_list):
+        print(i,document)
+        tokens = document.split()
+        print(tokens)
+        #Converting the letters to lowercase and removing , and . and putting them into list.
+        normalized = [token.lower().rstrip(',.') for token in tokens]
+        #normalized = [token.rstrip('.,').lower() for token in tokens]
+        print("normalized",normalized)
+        print(keyword.lower())
+        print(keyword.lower() in normalized)
+        if keyword.lower() in normalized:
+            indeces.append(i)
+    return indeces
