@@ -87,3 +87,10 @@ for i, doc in enumerate(doc_list):
 0 is The Learn Python Challenge Casino.
 1 is They bought a car
 2 is Casinoville
+
+
+=============
+useful functions:
+type(math)
+help(math)
+dir(math)
