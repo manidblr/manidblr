@@ -65,3 +65,7 @@ s = """
 !{0} Not planet
 """.format('Pluto','Dwarf Planet')
 print(s)
+
+=========
+
+Empty string is considered as False
