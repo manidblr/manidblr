@@ -77,3 +77,13 @@ print(list(e_list))
 Output:
 
 [(0, 'A'), (1, 'B'), (2, 'C'), (3, 'D')]
+
+
+Enumerate list objects.
+doc_list = ["The Learn Python Challenge Casino.", "They bought a car", "Casinoville"]
+keyword = "casino"
+for i, doc in enumerate(doc_list):
+    print("{} is {}".format(i,doc))
+0 is The Learn Python Challenge Casino.
+1 is They bought a car
+2 is Casinoville
