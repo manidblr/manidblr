@@ -5,4 +5,13 @@ Completed: alter database open upgrade
 2021-08-10T16:56:04.698300+00:00
 SERVER COMPONENT id=UTLRP_END: timestamp=2021-08-10 16:56:04
 
-It took total one hour to perform the upgrade.
+It took total one hour to perform the upgrade from 12.2 to 19c.
+
+Default Components in 19c:
+CATALOG
+CATPROC
+XDB
+CONTEXT
+RAC <== This is disabled by default.
+
+
