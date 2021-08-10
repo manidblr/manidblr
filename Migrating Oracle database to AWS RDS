@@ -28,7 +28,7 @@ Create new group oracle-se2-19-S3 and select S3_INTEGRATION option.
 
 
 Modify the RDS instance rds-ora1-19c and apply the options group oracle-se2-19-S3 
-
+Upon this change, we will see rdsadmin.rdsadmin_s3_tasks package in RDSADMIN schema that can be used do copy the data from S3.
 
 Downloading files from an Amazon S3 bucket to an Oracle DB instance
 SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
