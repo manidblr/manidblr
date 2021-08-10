@@ -109,3 +109,16 @@ begin
 end;
 / 
 
+
+Enable JVM to support execution of OS commands:
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/oracle-options-java.html
+db.t3.micro or db.t3.small RDS instances doesn't support JAVA.
+Auto Minor Version Upgrade enabled
+After Association of JAVAVM options group, grant necessary permissions.
+
+create user test_proc identified by password;
+CALL dbms_java.grant_permission('TEST_PROC', 'oracle.aurora.security.JServerPermission', 'LoadClassInPackage.*', ''); 
+CALL dbms_java.grant_permission('ADMIN', 'oracle.aurora.security.JServerPermission', 'LoadClassInPackage.*', ''); 
+CALL dbms_java.grant_permission('RDSADMIN', 'oracle.aurora.security.JServerPermission', 'LoadClassInPackage.*', ''); 
+
+
