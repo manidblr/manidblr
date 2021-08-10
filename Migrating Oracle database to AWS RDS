@@ -122,3 +122,5 @@ CALL dbms_java.grant_permission('ADMIN', 'oracle.aurora.security.JServerPermissi
 CALL dbms_java.grant_permission('RDSADMIN', 'oracle.aurora.security.JServerPermission', 'LoadClassInPackage.*', ''); 
 
 
+Running OS commands from SQL/Plus:
+https://flylib.com/books/en/2.680.1/running_operating_system_commands.html
