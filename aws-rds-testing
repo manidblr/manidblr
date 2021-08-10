@@ -1,0 +1,8 @@
+Upgrade time on 2 CPU process:
+Completed: alter database open upgrade
+2021-08-10T15:51:25.046630+00:00
+
+2021-08-10T16:56:04.698300+00:00
+SERVER COMPONENT id=UTLRP_END: timestamp=2021-08-10 16:56:04
+
+It took total one hour to perform the upgrade.
