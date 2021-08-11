@@ -1,0 +1,28 @@
+1.) Source RDS/On-Prem DB is ready
+
+2.) Login to Secrets Manager and create a new secret for Source DB:
+source/rds/ora/19c/admin
+Userid: admin
+password: defaltone
+
+Python that will be used by secrets manager to retreive the secrets.
+def get_secret():
+
+    secret_name = "source/rds/ora/19c/admin"
+    region_name = "us-east-2"
+
+    # Create a Secrets Manager client
+    session = boto3.session.Session()
+    client = session.client(
+        service_name='secretsmanager',
+        region_name=region_name
+    )
+    
+    
+3.) Target RDS Instance is ready
+
+4.) Create secrets manager entry for target DB.
+
+5.) Create secrets-manager-read-policy and assign it permissions to read secrets from both source and target.
+
+6.) Create secrets-manager-read-role and assign it secrets-manager-read-policy.
