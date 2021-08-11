@@ -64,12 +64,35 @@ db_create_file_dest      = "/rdsdbdata/db"
 
 #Exporting and importing using S3.
 https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Oracle.Procedural.Importing.html#Oracle.Procedural.Importing.DataPump.S3
+https://oracle-base.com/articles/misc/data-pump-api
 
 Export :
 GRANT UNLIMITED TABLESPACE TO "HR"
 
 
 Import:
+Pre-Create the users.
+Schemas to import:
+HR,OE,SH,IX,PM
+EXPORTED_SAMPLE_SCHEMAS.DMP
+
+create user HR identified by "Hello_123" default tablespace USERS_TS;
+create user OE identified by "Hello_123" default tablespace USERS_TS;
+create user SH identified by "Hello_123" default tablespace USERS_TS;
+create user IX identified by "Hello_123" default tablespace USERS_TS;
+create user PM identified by "Hello_123" default tablespace USERS_TS;
+
+grant unlimited tablespace, connect, resource to HR;
+grant unlimited tablespace, connect, resource to OE;
+grant unlimited tablespace, connect, resource to SH;
+grant unlimited tablespace, connect, resource to IX;
+grant unlimited tablespace, connect, resource to PM;
+
+
+
+
+
+
 ##DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'SCHEMA_EXPR','IN (''SCHEMA_1'')');
 
 
