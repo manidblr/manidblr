@@ -1,0 +1,9 @@
+Create Tablespace:
+CREATE TABLESPACE test_ts DATAFILE SIZE 1G AUTOEXTEND ON MAXSIZE 10G;
+alter tablespace test_ts default compress;
+
+AWS RDS supports compression:
+AWS RDS doesn't support tablespace encryption.
+ 
+  
+  
