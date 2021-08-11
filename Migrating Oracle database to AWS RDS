@@ -133,6 +133,18 @@ end;
 / 
 
 
+After the data has been imported, you can delete the files that you don't want to keep. You can list the files in the DATA_PUMP_DIR using the following command.
+
+SELECT * FROM TABLE(rdsadmin.rds_file_util.listdir('DATA_PUMP_DIR')) ORDER BY MTIME;
+To delete files in the DATA_PUMP_DIR that you no longer require, use the following command.
+
+EXEC UTL_FILE.FREMOVE('DATA_PUMP_DIR','<file name>');
+For example, the following command deletes the file named "sample_copied.dmp".
+
+EXEC UTL_FILE.FREMOVE('DATA_PUMP_DIR','sample_copied.dmp'); 
+
+
+
 Enable JVM to support execution of OS commands:
 https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/oracle-options-java.html
 db.t3.micro or db.t3.small RDS instances doesn't support JAVA.
