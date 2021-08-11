@@ -36,3 +36,13 @@ LICENSE_PACK	-- N -- T, D, N	-- Specifies the License Pack with which SQLT
 
 
 TIMEZONE_FILE_AUTO_UPGRADE & UTL_MAIL are also made avaialable through OPTIONS. 
+
+
+Using Oracle GoldenGate with Amazon RDS:
+Oracle GoldenGate (GoldenGate) collects, replicates, and manages transactional data between databases. It is a log-based change data capture (CDC) and replication software package used with Oracle databases for online transaction processing (OLTP) systems. GoldenGate creates trail files that contain the most recent changed data from the source database and then pushes these files to the target database. Amazon RDS supports GoldenGate for Oracle Database Standard Edition Two (SE2) and Enterprise Edition (EE).
+Created RCU in the past for OBI setup.
+
+
+Using the Oracle Repository Creation Utility on Amazon RDS for Oracle
+You can use Amazon RDS to host an Oracle DB instance that holds the schemas to support your Fusion Middleware components. Before you can use Fusion Middleware components, you must create and populate schemas for them in your database. You create and populate the schemas by using the Oracle Repository Creation Utility (RCU).
+
