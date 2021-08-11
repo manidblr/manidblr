@@ -21,4 +21,28 @@ CATJAVA
 
 
 
+As per setting in table RDSADMIN.RDS_CONFIGURATION trace files are deleted every 10080 minutes. ie; 168 Hrs and 7 days.
+Grants on RDSADMIN, SYS, SYSTEM cannot modified as they are monitored by Triggers under RDSADMIN.
+The below triger gets triggered before every DDL on database.
+create or replace TRIGGER rdsadmin.rds_ddl_trigger
+  BEFORE DDL ON DATABASE
+BEGIN
+        rdsadmin_trigger_util.secure_ddl;  --- This is the package which checks for what type of DDL it is and either raises exception or executes the trigger.
+END;
+
+Trigger:                    Package_being Executed:
+rdsadmin.rds_ddl_trigger   BEFORE DDL ON DATABASE  rdsadmin_trigger_util.secure_ddl
+rdsadmin.rds_ddl_trigger2   BEFORE DDL ON DATABASE rdsadmin_trigger_util.secure_ddl
+rdsadmin.rds_grant_trigger  BEFORE GRANT ON DATABASE rdsadmin_trigger_util.secure_grants
+rdsadmin.t_rds_ev_configuration rdsadmin_master_util.is_dml_enabled (Complicated)
+ rdsadmin.t_rds_master_log  --- before insert or update or delete on rdsadmin.rds_master_log --- rdsadmin_master_util.is_dml_enabled
+ rdsadmin.t_rds_sys_privs --- before insert or update or delete on rdsadmin.rds_sys_privs ---- rdsadmin_master_util.is_dml_enabled
+ 
+
+
+
+
+
+Upgrade details(Time & Version) can be found in table RDSADMIN.RDS_ENGINE_UPGRADE_INFO
+RDSADMIN.RDS_OPTION_INFO table tells the options enabled in RDS.(S3 Integration, JVM etc.)
 
