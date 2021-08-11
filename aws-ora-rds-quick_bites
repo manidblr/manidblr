@@ -1,0 +1,38 @@
+Create Tablespace:
+=> CREATE TABLESPACE test_ts DATAFILE SIZE 1G AUTOEXTEND ON MAXSIZE 10G;
+=> alter tablespace test_ts default compress;
+Creating Compressed tablespaces is allowed.
+
+=> AWS RDS supports compression:
+=> AWS RDS doesn't support tablespace encryption. select * from v$encryption doesn't show a wallet.
+
+We cannot run OS commands from SQLplus. Max we can do is copy files from RDS server to S3 and viceversa using S3_INTEGRATION option.
+Executing OS commands from SQLPLUS can be done using Scheduler Program of Program_Type EXECUTABLE. But, this needs "CREATE EXECUTABLE PROGRAM" privilege and granting this privilege is not allowed. 
+DBMS_SCHEDULER.CREATE_PROGRAM ( program_type=> 'EXECUTABLE',
+
+Other Alternative is to Create a Java Program and execute OS programs. For this JVM option needs to be enabled. However, granting of permissions on executing java program that access OS is denied.
+exec dbms_java.grant_permission( 'SCOTT', 'SYS:java.io.FilePermission','<>','execute');
+
+ 
+ AWS RDS Backups: 
+ Hybrid Columnar Compression
+ 
+ 
+Oracle Native Encryption is setup using the OPTION 
+SQLNET.CRYPTO_CHECKSUM_SERVER	 --- REQUESTED -- ACCEPTED, REJECTED, REQUESTED, REQUIRED	--- Specifies the desired data integrity behavior
+SQLNET.CRYPTO_CHECKSUM_TYPES_SERVER --- SHA1,MD5 --- SHA256, SHA384, SHA512, SHA1, MD5	--- Specifies list of checksumming algorithms in order of intended use
+SQLNET.ENCRYPTION_SERVER	--- REQUESTED --- ACCEPTED, REJECTED, REQUESTED, REQUIRED	--- Specifies the desired encryption behavior
+SQLNET.ENCRYPTION_TYPES_SERVER --- RC4_256,AES256,AES192,3DES168,RC4_128,AES128,3DES112,RC4_56,DES,RC4_40,DES40RC4_256, AES256, AES192, 3DES168, RC4_128, AES128, 3DES112, RC4_56, DES, RC4_40, DES40	Specifies lis
+  
+SSL Can be enabled using OPTIONS:
+Option setting    --- Value  ----  Allowed values  --- Description
+FIPS.SSLFIPS_140	 -- FALSE --- TRUE, FALSE	--- Specifies whether the SSL connection uses only FIPS-verified cipher suites
+SQLNET.CIPHER_SUITE	-- SSL_RSA_WITH_AES_256_CBC_SHA --  SSL_RSA_WITH_AES_256_CBC_SHA, SSL_RSA_WITH_AES_256_CBC_SHA256, SSL_RSA_WITH_AES_256_GCM_SHA384 --- 	Specifies the desired SSL cipher suite
+SQLNET.SSL_VERSION	--- 1.0 --- 1.0, 1.2 or 1.0, 1.2 -- S
+
+
+SQLT Can be enabled through OPTION Groups:
+LICENSE_PACK	-- N -- T, D, N	-- Specifies the License Pack with which SQLT
+
+
+TIMEZONE_FILE_AUTO_UPGRADE & UTL_MAIL are also made avaialable through OPTIONS. 
