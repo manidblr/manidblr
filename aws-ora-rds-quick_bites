@@ -4,7 +4,15 @@ Create Tablespace:
 Creating Compressed tablespaces is allowed.
 
 => AWS RDS supports compression:
-=> AWS RDS doesn't support tablespace encryption. select * from v$encryption doesn't show a wallet.
+=> AWS RDS doesn't support tablespace encryption. select * from v$encryption doesn't show a wallet. (Not 100% sure). Below grants are failing with permissions issue.
+alter system set encryption key identified by "T45rustMe54";
+CREATE TABLESPACE test_ts DATAFILE SIZE 10M AUTOEXTEND ON MAXSIZE 1G encryption using 'AES128' default storage (encrypt);
+
+
+Database is created by default in NOARCHIVELOG mode. Convert to ARCHIVELOG as below.
+
+ALTER database ARCHIVELOG;
+
 
 We cannot run OS commands from SQLplus. Max we can do is copy files from RDS server to S3 and viceversa using S3_INTEGRATION option.
 Executing OS commands from SQLPLUS can be done using Scheduler Program of Program_Type EXECUTABLE. But, this needs "CREATE EXECUTABLE PROGRAM" privilege and granting this privilege is not allowed. 
