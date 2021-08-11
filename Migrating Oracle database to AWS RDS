@@ -1,3 +1,34 @@
+
+
+High Level Steps:
+
+On AWS:
+Create an S3 bucket named "expdp_dumps"
+Create a policy rds-s3-integration-policy and grant read/write access on bucket "expdp_dumps"
+Assign the above policy to role rds-s3-integration-role
+Create an options Group oracle-se2-19-S3 and add the option S3_INTEGRATION
+Modify the target RDS instance rds-ora1-19c and apply the options group oracle-se2-19-S3
+
+On Source:
+Take Export dumps on On-Prem DB
+Zip the files
+Copy them to EC2
+
+On AWS:
+Unzip the files on EC2
+Copy the file from EC2 to S3
+Copy the files from S3 to RDS using rdsadmin_s3_tasks.download_from_s3
+Pre-Create users, tablespaces and Roles in RDS
+Import using dbms_datapump(Import Options: DISABLE_ARCHIVE_LOGGING=1, PARALLEL=n)
+Compile the objects of imported schemas.
+Collect the statistics
+Perform validations.
+
+Upload the log files to S3 bucket using rdsadmin_s3_tasks.upload_to_s3
+Cleanup the dumps & log files from RDS server using UTL_FILE.FREMOVE('DATA_PUMP_DIR','exported_sample_schemas.zip')
+
+
+
 Create an export dumpfile
 Create an S3 bucket
 
