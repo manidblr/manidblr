@@ -65,6 +65,9 @@ db_create_file_dest      = "/rdsdbdata/db"
 #Exporting and importing using S3.
 https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Oracle.Procedural.Importing.html#Oracle.Procedural.Importing.DataPump.S3
 https://oracle-base.com/articles/misc/data-pump-api
+https://docs.oracle.com/database/121/ARPLS/d_datpmp.htm#ARPLS66050
+https://docs.oracle.com/database/121/ARPLS/d_datpmp.htm#ARPLS66053
+
 
 Export :
 GRANT UNLIMITED TABLESPACE TO "HR"
@@ -95,42 +98,74 @@ grant unlimited tablespace, connect, resource to PM;
 
 ##DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'SCHEMA_EXPR','IN (''SCHEMA_1'')');
 
-
-DECLARE
-  v_hdnl NUMBER;
-BEGIN
-  v_hdnl := DBMS_DATAPUMP.OPEN( 
-    operation => 'IMPORT', 
-    job_mode  => 'SCHEMA', 
-    job_name  => null);
-  DBMS_DATAPUMP.ADD_FILE( 
-    handle    => v_hdnl, 
-    filename  => 'Oracle11g_Sample_Schemas.zip', 
-    directory => 'DATA_PUMP_DIR', 
-    filetype  => dbms_datapump.ku$_file_type_dump_file);
-  DBMS_DATAPUMP.ADD_FILE( 
-    handle    => v_hdnl, 
-    filename  => 'import_Oracle11g_Sample_Schemas.log', 
-    directory => 'DATA_PUMP_DIR', 
-    filetype  => dbms_datapump.ku$_file_type_log_file);
-   DBMS_DATAPUMP.METADATA_FILTER(v_hdnl,'SCHEMA_EXPR','IN (''HR'')');
-  DBMS_DATAPUMP.START_JOB(v_hdnl);
-END;
-/ 
-
-Example 2:
-Export:
 declare
- handle number;
+  l_dp_handle       number;
 begin
- handle := dbms_datapump.open('EXPORT','SCHEMA');
- dbms_datapump.add_file(handle,'SCOTT3.DMP','DUMPDIR');
- dbms_datapump.metadata_filter(handle,'SCHEMA_EXPR','= ''SCOTT''');
- dbms_datapump.set_parallel(handle,4);
- dbms_datapump.start_job(handle);
- dbms_datapump.detach(handle);
+  -- Open a schema import job.
+  l_dp_handle := dbms_datapump.open(
+    operation   => 'IMPORT',
+    job_mode    => 'SCHEMA',
+    remote_link => NULL,
+    job_name    => 'TEST_IMPORT1',
+    version     => 'LATEST');
+
+  -- Specify the schema to be imported.
+  -- dbms_datapump.metadata_filter(
+  --   handle => l_dp_handle,
+  --   name   => 'SCHEMA_EXPR',
+  --   value  => '= ''TESTUSER1''');
+
+  -- Specify the dump file name and directory object name.
+  dbms_datapump.add_file(
+    handle    => l_dp_handle,
+    filename  => 'EXPORTED_SAMPLE_SCHEMAS.DMP',
+    directory => 'DATA_PUMP_DIR',
+	filetype  => DBMS_DATAPUMP.KU$_FILE_TYPE_DUMP_FILE);
+	
+	-- filetype  => DBMS_DATAPUMP.KU$_FILE_TYPE_SQL_FILE - For generating a SQL File:
+
+  -- Specify the log file name and directory object name.
+  dbms_datapump.add_file(
+    handle    => l_dp_handle,
+    filename  => 'IMPORT_SAMPLE_SCHEMAS.log',
+    directory => 'DATA_PUMP_DIR',
+    filetype  => DBMS_DATAPUMP.KU$_FILE_TYPE_LOG_FILE);
+
+  -- Perform a REMAP_SCHEMA from SCOTT to SCOTT2.
+  dbms_datapump.metadata_remap(
+    handle     => l_dp_handle,
+    name       => 'REMAP_TABLESPACE',
+    old_value  => 'EXAMPLE',
+    value      => 'USERS_TS');
+
+  dbms_datapump.metadata_remap(
+    handle     => l_dp_handle,
+    name       => 'REMAP_TABLESPACE',
+    old_value  => 'USERS',
+    value      => 'USERS_TS');
+	
+  dbms_datapump.set_parallel(
+    handle     => l_dp_handle,	
+	degree	   => 2);
+	
+  dbms_datapump.metadata_transform(	
+	handle     => l_dp_handle,
+	name	   => 'DISABLE_ARCHIVE_LOGGING',
+	value	   => 1);
+ -- value 1 is disable, and 0 to enable.
+ -- object_type is skipped, so ARCHIVING is not done for both Tables & Indexes.
+ 
+  DBMS_DATAPUMP.SET_PARAMETER (
+    handle     => l_dp_handle,
+	name	   => 'TABLE_EXISTS_ACTION',
+	value	   => 'REPLACE');
+  
+  dbms_datapump.start_job(l_dp_handle);
+
+  dbms_datapump.detach(l_dp_handle);
 end;
-/ 
+/
+
 
 
 After the data has been imported, you can delete the files that you don't want to keep. You can list the files in the DATA_PUMP_DIR using the following command.
