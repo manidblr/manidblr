@@ -1,9 +1,22 @@
+https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.Oracle.html
+
+DMS Operates in 2 modes: LogMiner or AWS DMS Binary Reader for CDC.
+LogMiner is an Oracle API to read the online redo logs and archived redo log files. Binary Reader is an AWS DMS method that reads and parses the raw redo log files directly.
+LOB column support in Oracle 12c <-- Not supported by LogMiner. But, supported by Binary Reader.
+Oracle transparent data encryption (TDE) => Supported by LogMiner and partially by Binary Reader.
+Oracle compression => Supported by Logminer and not by Binary Reader.
+
+
+
 1.) Source RDS/On-Prem DB is ready
+rdsoraee
+
 
 2.) Login to Secrets Manager and create a new secret for Source DB:
 source/rds/ora/19c/admin
 Userid: admin
 password: defaltone
+arn:aws:secretsmanager:us-east-2:473371257295:secret:source/rds/ora/19c/admin-vfYzXv
 
 Python that will be used by secrets manager to retreive the secrets.
 def get_secret():
@@ -20,9 +33,14 @@ def get_secret():
     
     
 3.) Target RDS Instance is ready
+database-2
 
 4.) Create secrets manager entry for target DB.
+target/rds/ora/19c/admin
+Userid: admin
+password: defaultone
+arn:aws:secretsmanager:us-east-2:473371257295:secret:target/rds/ora/19c/admin-2NH9yO
 
-5.) Create secrets-manager-read-policy and assign it permissions to read secrets from both source and target.
+5.) Create secrets-manager-read-policy and assign it permissions to read secrets from both source and target secrets.
 
 6.) Create secrets-manager-read-role and assign it secrets-manager-read-policy.
