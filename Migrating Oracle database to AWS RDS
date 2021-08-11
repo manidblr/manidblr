@@ -171,12 +171,49 @@ end;
 After the data has been imported, you can delete the files that you don't want to keep. You can list the files in the DATA_PUMP_DIR using the following command.
 
 SELECT * FROM TABLE(rdsadmin.rds_file_util.listdir('DATA_PUMP_DIR')) ORDER BY MTIME;
-To delete files in the DATA_PUMP_DIR that you no longer require, use the following command.
 
+Output:
+EXPORTED_SAMPLE_SCHEMAS.DMP	file	59256832	10-AUG-21
+IMPORT_SAMPLE_SCHEMAS.log	file	28647	11-AUG-21
+datapump/	directory	4096	11-AUG-21
+
+
+To delete files in the DATA_PUMP_DIR that you no longer require, use the following command.
 EXEC UTL_FILE.FREMOVE('DATA_PUMP_DIR','<file name>');
 For example, the following command deletes the file named "sample_copied.dmp".
 
 EXEC UTL_FILE.FREMOVE('DATA_PUMP_DIR','sample_copied.dmp'); 
+
+==============================================================================
+To Copy from S3 and Vice Versa.
+SELECT rdsadmin.rdsadmin_s3_tasks.download_from_s3(
+      p_bucket_name    =>  'dbamani29-oradump', 
+      p_s3_prefix      =>  'exported_sample_schemas.dmp', 
+      p_directory_name =>  'DATA_PUMP_DIR'
+--      p_decompress     =>  1 : THis option is still not made available by AWS
+      ) 
+   AS TASK_ID FROM DUAL;  
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','1628648503583-40'));    
+   
+SELECT * FROM TABLE(rdsadmin.rds_file_util.listdir('DATA_PUMP_DIR')) ORDER BY MTIME;
+
+EXEC UTL_FILE.FREMOVE('DATA_PUMP_DIR','exported_sample_schemas.zip'); 
+
+SELECT * FROM TABLE(rdsadmin.rds_file_util.listdir('DATA_PUMP_DIR')) ORDER BY MTIME;
+
+
+   SELECT rdsadmin.rdsadmin_s3_tasks.upload_to_s3(
+      p_bucket_name    =>  'dbamani29-oradump', 
+      p_prefix         =>  'exported_sample_schemas.dmp',
+      p_s3_prefix      =>  'test2_',
+      p_directory_name =>  'DATA_PUMP_DIR'
+      --p_compress       => 1 This option is not working.
+      ) 
+   AS TASK_ID FROM DUAL;
+SELECT text FROM table(rdsadmin.rds_file_util.read_text_file('BDUMP','1628648503583-40')); 
+
+===============================================================================================================
+
 
 
 
