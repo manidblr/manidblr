@@ -1,0 +1,1 @@
+After calling type(graph) you see that Jimmy's graph is of type matplotlib.axes._subplots.AxesSubplot. Hm, that's a new one. By calling dir(graph), you find three methods that seem like they'll be useful: .set_title(), .set_ylim(), and .set_ylabel().
