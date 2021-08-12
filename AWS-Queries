@@ -25,3 +25,14 @@ Biggest Failure:
 
 Have to disagree with manager: 
 Release archive file dest.
+
+
+=========================================
+Queries I was not able to answer.
+What tool do you use to see the query plan of SQL in postgreSQL.
+How do you identify which query is taking time in postgreSQL?
+How do you enable auto vaccum in postgresql?
+How do you know when to execute Auto Vaccum?
+
+Which loop is better in which situation.
+
