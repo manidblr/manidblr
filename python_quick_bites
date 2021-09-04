@@ -94,3 +94,12 @@ useful functions:
 type(math)
 help(math)
 dir(math)
+
+
+Locate Python installation location:
+>>> import sys
+>>> py_location = sys.exec_prefix
+>>> py_location
+'C:\\ProgramData\\Anaconda3'
+
+
