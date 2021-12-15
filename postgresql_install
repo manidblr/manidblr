@@ -1,0 +1,117 @@
+
+============================= Redhat ================
+Pre-Requisites
+sudo yum install wget
+
+
+# Install the repository RPM:
+sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+# The above RPM does not install postgresql. It just displays the list postgreSQL versions available.
+# List the PSQL versions available.
+sudo yum list module postgresql*
+
+# Disable the built-in PostgreSQL module: This comes default with Linux.
+sudo dbf list postgresql
+sudo dnf -qy module disable postgresql
+
+# Install PostgreSQL:
+sudo dnf install -y postgresql12-server
+
+# Optionally initialize the database and enable automatic start:
+sudo /usr/pgsql-12/bin/postgresql-12-setup initdb
+sudo systemctl enable postgresql-12
+#output: Created symlink /etc/systemd/system/multi-user.target.wants/postgresql-12.service → /usr/lib/systemd/system/postgresql-12.service.
+
+sudo systemctl start postgresql-12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[ec2-user@ip-172-31-0-24 ~]$ sudo dnf install -y postgresql12-server
+Updating Subscription Management repositories.
+Unable to read consumer identity
+
+This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.
+
+Last metadata expiration check: 0:06:30 ago on Wed 15 Dec 2021 03:46:10 PM UTC.
+Dependencies resolved.
+=============================================================================================================================================================================================
+ Package                                         Architecture                       Version                                        Repository                                           Size
+=============================================================================================================================================================================================
+Installing:
+ postgresql12-server                             x86_64                             12.9-1PGDG.rhel8                               pgdg12                                              5.2 M
+Installing dependencies:
+ libicu                                          x86_64                             60.3-2.el8_1                                   rhel-8-baseos-rhui-rpms                             8.8 M
+ postgresql12                                    x86_64                             12.9-1PGDG.rhel8                               pgdg12                                              1.7 M
+ postgresql12-libs                               x86_64                             12.9-1PGDG.rhel8                               pgdg12                                              400 k
+
+Transaction Summary
+=============================================================================================================================================================================================
+Install  4 Packages
+
+Total download size: 16 M
+Installed size: 63 M
+Downloading Packages:
+(1/4): postgresql12-libs-12.9-1PGDG.rhel8.x86_64.rpm                                                                                                         932 kB/s | 400 kB     00:00
+(2/4): postgresql12-12.9-1PGDG.rhel8.x86_64.rpm                                                                                                              3.4 MB/s | 1.7 MB     00:00
+(3/4): postgresql12-server-12.9-1PGDG.rhel8.x86_64.rpm                                                                                                       9.1 MB/s | 5.2 MB     00:00
+(4/4): libicu-60.3-2.el8_1.x86_64.rpm                                                                                                                         31 MB/s | 8.8 MB     00:00
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                                         21 MB/s |  16 MB     00:00
+warning: /var/cache/dnf/pgdg12-64e2194e85277659/packages/postgresql12-12.9-1PGDG.rhel8.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID 442df0f8: NOKEY
+PostgreSQL 12 for RHEL/CentOS 8 - x86_64                                                                                                                     1.6 MB/s | 1.7 kB     00:00
+Importing GPG key 0x442DF0F8:
+ Userid     : "PostgreSQL RPM Building Project <pgsql-pkg-yum@postgresql.org>"
+ Fingerprint: 68C9 E2B9 1A37 D136 FE74 D176 1F16 D2E1 442D F0F8
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG
+Key imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                                                     1/1
+  Installing       : libicu-60.3-2.el8_1.x86_64                                                                                                                                          1/4
+  Running scriptlet: libicu-60.3-2.el8_1.x86_64                                                                                                                                          1/4
+  Installing       : postgresql12-libs-12.9-1PGDG.rhel8.x86_64                                                                                                                           2/4
+  Running scriptlet: postgresql12-libs-12.9-1PGDG.rhel8.x86_64                                                                                                                           2/4
+  Installing       : postgresql12-12.9-1PGDG.rhel8.x86_64                                                                                                                                3/4
+  Running scriptlet: postgresql12-12.9-1PGDG.rhel8.x86_64                                                                                                                                3/4
+  Running scriptlet: postgresql12-server-12.9-1PGDG.rhel8.x86_64                                                                                                                         4/4
+  Installing       : postgresql12-server-12.9-1PGDG.rhel8.x86_64                                                                                                                         4/4
+  Running scriptlet: postgresql12-server-12.9-1PGDG.rhel8.x86_64                                                                                                                         4/4
+  Verifying        : postgresql12-12.9-1PGDG.rhel8.x86_64                                                                                                                                1/4
+  Verifying        : postgresql12-libs-12.9-1PGDG.rhel8.x86_64                                                                                                                           2/4
+  Verifying        : postgresql12-server-12.9-1PGDG.rhel8.x86_64                                                                                                                         3/4
+  Verifying        : libicu-60.3-2.el8_1.x86_64                                                                                                                                          4/4
+Installed products updated.
+
+Installed:
+  libicu-60.3-2.el8_1.x86_64          postgresql12-12.9-1PGDG.rhel8.x86_64          postgresql12-libs-12.9-1PGDG.rhel8.x86_64          postgresql12-server-12.9-1PGDG.rhel8.x86_64
+
+Complete!
+[ec2-user@ip-172-31-0-24 ~]$
