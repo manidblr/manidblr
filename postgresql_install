@@ -1,7 +1,12 @@
 
 ============================= Redhat ================
 Pre-Requisites
+yum update -y
 sudo yum install wget
+yum install -y mlocate
+updatedb
+
+
 
 
 # Install the repository RPM:
@@ -26,8 +31,47 @@ sudo systemctl start postgresql-12
 
 
 
+Default Installation Directory:
+[ec2-user@ip-172-31-0-24 bin]$ pwd
+/usr/bin
 
 
+More Utilities are avaiblle in this location: ex: pg_ctl, 
+[root@ip-172-31-0-24 pgsql-12]# pwd
+/usr/pgsql-12/bin
+
+
+Init DB log:
+/var/lib/pgsql/12/initdb.log
+
+ You can now start the database server using:
+
+/usr/pgsql-12/bin/pg_ctl -D /var/lib/pgsql/12/data/ -l logfile start
+
+
+
+Post Master Log:
+cat /var/lib/pgsql/12/data/postmaster.pid
+14433
+/var/lib/pgsql/12/data
+1639583667
+5432
+/var/run/postgresql
+localhost
+  5432001         4
+ready
+
+
+Default Processes:
+[root@ip-172-31-0-24 data]# ps -ef | grep postgres
+postgres   14433       1  0 15:54 ?        00:00:00 /usr/pgsql-12/bin/postmaster -D /var/lib/pgsql/12/data/
+postgres   14435   14433  0 15:54 ?        00:00:00 postgres: logger
+postgres   14437   14433  0 15:54 ?        00:00:00 postgres: checkpointer
+postgres   14438   14433  0 15:54 ?        00:00:00 postgres: background writer
+postgres   14439   14433  0 15:54 ?        00:00:00 postgres: walwriter
+postgres   14440   14433  0 15:54 ?        00:00:00 postgres: autovacuum launcher
+postgres   14441   14433  0 15:54 ?        00:00:00 postgres: stats collector
+postgres   14442   14433  0 15:54 ?        00:00:00 postgres: logical replication launcher
 
 
 
