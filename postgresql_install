@@ -187,8 +187,57 @@ pg_controldata (PostgreSQL) 12.9
 
 
 
+Directory structure:
+/var/lib/pgsql/12/data/base :- This is the directory where each database has a folder. The number directory is the object identifier of the database.
+
+[postgres@ip-172-31-0-24 base]$ ls -lrt
+total 60
+drwx------. 2 postgres postgres 8192 Dec 15 15:54 1
+drwx------. 2 postgres postgres 8192 Dec 15 15:54 13446
+drwx------. 2 postgres postgres 8192 Dec 16 03:11 16392
+drwx------. 2 postgres postgres 8192 Dec 16 03:11 16393
+drwx------. 2 postgres postgres 8192 Dec 16 03:16 13447
 
 
+/var/lib/pgsql/12/data/global: 
+This directory contains cluster wide objects: This contains all pg_** tables and indexes.
+
+/var/lib/pgsql/12/data/pg_dynshmem:
+Data related to Dynamic Shared memory are stored here.
+
+/var/lib/pgsql/12/data/pg_logical:
+Data related to snapshots are written here.
+
+/var/lib/pgsql/12/data/pg_multixact:
+Contains Multi Extract transaction data. Shared row locks etc.
+
+/var/lib/pgsql/12/data/pg_replslot:
+This is used to support replication.
+
+/var/lib/pgsql/12/data/pg_serial:
+Committed serialize transaction
+
+/var/lib/pgsql/12/data/pg_replslot:
+Replica set related data is stored here.
+
+/var/lib/pgsql/12/data/pg_snapshots:
+Snapshot data is stored here.
+
+/var/lib/pgsql/12/data/pg_stat:
+Global Stats and table stats are stored here.
+
+/var/lib/pgsql/12/data/pg_stat_tmp:
+Temp table stats are stored here.
+
+/var/lib/pgsql/12/data/pg_tblspc:
+When a new tablespace is created, as symbolic link is created in this directory.
+
+/var/lib/pgsql/12/data/pg_wal:
+Contains Write Ahead Logs.
+
+
+/var/lib/pgsql/12/data/pg_wal/archive_status:
+Archive files are stored here
 
 
 
