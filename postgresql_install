@@ -235,9 +235,15 @@ When a new tablespace is created, as symbolic link is created in this directory.
 /var/lib/pgsql/12/data/pg_wal:
 Contains Write Ahead Logs.
 
-
 /var/lib/pgsql/12/data/pg_wal/archive_status:
 Archive files are stored here
+
+
+Default Databases in postgresql:
+postgres
+template0 <- Pristine copy. No one can switch to this and use this DB.
+template1 <- Users can create 
+
 
 
 
