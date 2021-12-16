@@ -1,0 +1,22 @@
+\?              Display helpful commands.
+\c              data1  <== To connect to database called data1
+\d              display list of relations(tables)
+\dt[S+]         List all tables 
+\d[S+]  NAME           describe table, view, sequence, or index
+\d emp          describe table emp
+\dT[S+]         List data types of all tables
+\db[+]          List of tablespaces
+\dg             List the roles 
+\di             Display indexes
+\dn[+]          List of schemas
+\dp             List privileges
+\dP             List partitioned relations
+\du[S+]         List roles/users in psql.
+\dv[S+]         List Views
+\sf[+]          Show Function definition
+\sv[+]          Show View definition
+\conninfo       Display connection info.
+\password [USERNAME]   securely change the password for a user
+
+To display list of databases:
+select * from pg_database;
