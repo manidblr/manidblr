@@ -95,11 +95,22 @@ ExecReload=/bin/kill -HUP $MAINPID
 
 
 
-Initializing a DB:
+Initializing a Cluster:
 initdb -D /var/lib/pgsql/12/newdb -U mani99v -W
 DB Name: newdb
 Super User : mani99v
 Password: Postgres will prompt to enter the password.
+
+Start a new cluster. The new cluster cannot use the same port as 5432 as it is being used by old cluster named data. Modify postgresql.conf in folder
+/var/lib/pgsql/12/newdb/ostgresql.conf modify below parameter.
+port = 5433
+pg_ctl start -D "/var/lib/pgsql/12/newdb"
+The new DB cluster will have all set of new processes.
+
+pg_ctl status -D "/var/lib/pgsql/12/newdb"
+pg_ctl: server is running (PID: 34754)
+/usr/pgsql-12/bin/postgres "-D" "/var/lib/pgsql/12/newdb"
+
 
 
 Stop & Start PostgreSQL:
@@ -112,7 +123,66 @@ pg_ctl restart -D /var/lib/pgsql/12/data -m immediate
 Shutdown modes: smart, fast & Immedaite
 
 
+pg_controldata /var/lib/pgsql/12/data
+TO understand whats going on with each database.
 
+
+
+
+
+Postgresql Commands:
+
+show port;
+show data_directory;
+
+postgres=# show port;
+ port
+------
+ 5432
+(1 row)
+
+postgres=# show data_directory;
+     data_directory
+------------------------
+ /var/lib/pgsql/12/data
+(1 row)
+
+
+
+Resetting a parameter for a DB Cluster: Some parameters are dynamic, some of them need reload and others need restart. the details are found in postgresql.conf
+Option 1:
+show work_mem;
+alter system set work_mem='10MB';
+exit
+
+pg_ctl reload -D "/var/lib/pgsql/12/data"
+show work_mem;
+
+Option 2:
+postgres=# show work_mem;
+ work_mem
+----------
+ 10MB
+(1 row)
+
+postgres=# alter system set work_mem='30MB';
+ALTER SYSTEM
+postgres=# select pg_reload_conf();
+ pg_reload_conf
+----------------
+ t
+(1 row)
+
+postgres=# show work_mem;
+ work_mem
+----------
+ 30MB
+(1 row)
+
+
+Get the version of postgres:
+pg_controldata -V -D /var/lib/pgsql/12/data
+pg_controldata (PostgreSQL) 12.9
 
 
 
