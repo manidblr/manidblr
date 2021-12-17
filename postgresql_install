@@ -4,6 +4,8 @@ Pre-Requisites
 yum update -y
 sudo yum install wget
 yum install -y mlocate
+yum install git
+yum install make
 updatedb
 
 
