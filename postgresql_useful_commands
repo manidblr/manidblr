@@ -19,6 +19,14 @@
 \conninfo       Display connection info.
 \password [USERNAME]   securely change the password for a user
 \s              Displays all the commands executed by the user
+\!              To execute OS commands from psql prompt
+\g              To re-execute previous command.
+\timing         To toggle timing on and off
+\e              To edit previous command
+\ef int_func    To edit function int_func
+\o output.lst   Spool output of sql queries to output.lst file
+\! cls          Clear Screen
+
 
 
 To display list of databases:
@@ -70,6 +78,53 @@ createdb -D tempts4 -O tempuser -p 5432 -U postgres tempdb4
 -D tempts4 is the new DB name
 -O tempuser is the owner of new DB
 tempdb4 is the new DB name
+
+
+
+
+pg_catalog : Data Dictionary views:
+select * from pg_database;
+
+select * from pg_stat_database; # To get a list of activities happening in eacho database. ie; num rows selected, temp bytes used etc.
+
+select * from pg_tablespace;
+
+select * from pg_operator; # To list operators supported by postgres. ie; <, >, = etc..
+
+select * from pg_available_extensions;  # List the available extensions and if they are installed.
+
+select * from pg_shadow; To display details about the users present in cluster.
+
+select * from pg_timezone_names; 
+
+select * from pg_locks; # Display locks in current sessions.
+
+select * from pg_tables; # Display all tables present in cluster including pg_catalog owned tables.
+select * from pg_tables where schema_name='pg_catalog';  List all data dictionary tables.
+select * from pg_indexes; # Gives the details of indexes along with script.
+select * from pg_views;
+
+select * from pg_settings; # Display all parameters
+
+select current_schema;
+select current_user;
+select current_database();
+select current_setting('max_parallel_workers');
+select pg_postmaster_start_time();
+
+select now() as current;
+
+select (now() + interval '1 hour') as an_hour_later;
+
+
+
+
+
+
+
+
+
+
 
 
 
