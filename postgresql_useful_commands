@@ -121,6 +121,18 @@ Auto Vaccum is enabled by default at table level. Auto Vaccum Deamon runs automa
 Disable:   alter table tel_directory set (autovaccum_enabled=false);
 Verify:   select reloptions from pg_class where relname='tel_directory';
 
+Explain Plan:
+explain select * from tel_directory;
+
+Analyze:
+analyze tel_directory;
+
+select relname,reltuples,relpages from pg_class where rel_name='tel_directory';
+
+
+
+
+
 
 
 
