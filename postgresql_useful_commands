@@ -119,7 +119,7 @@ select (now() + interval '1 hour') as an_hour_later;
 
 Auto Vaccum is enabled by default at table level. Auto Vaccum Deamon runs automatically after certain amount of transactions.
 Disable:   alter table tel_directory set (autovaccum_enabled=false);
-Verify:   select reloptions from pg_class where relname='tel_directory';
+Verify auto vaccum status:   select reloptions from pg_class where relname='tel_directory';
 
 Explain Plan:
 explain select * from tel_directory;
@@ -127,7 +127,19 @@ explain select * from tel_directory;
 Analyze:
 analyze tel_directory;
 
+Get table stat details:
 select relname,reltuples,relpages from pg_class where rel_name='tel_directory';
+
+Query Execution Cost:
+Cost = number_of_pages * seq_page_cost + number_of_rows*cpu_tuple_cost
+
+number_of_pages = select relpages from pg_class where relname='tel_directory';
+show seq_page_cost # mostly 1 from postgresql.conf file
+number_of_rows = select count(*) from tel_directory;
+show cpu_tuple_cost ## approximately 0.01
+
+
+
 
 
 
