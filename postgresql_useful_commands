@@ -139,9 +139,15 @@ number_of_rows = select count(*) from tel_directory;
 show cpu_tuple_cost ## approximately 0.01
 
 
+Vaccum:
+Plain Vacuum of table:
+vaccum(verbose) tel_directory;
 
+Full Vacuum:
+vaccum(full,verbose) tel_directory;
 
-
+To get the Frozen Transaction ID of a database.
+select datname,age(datfrozenxid),current_setting('autovacuum_freeze_max_age') from pg_database order by 2 desc;
 
 
 
