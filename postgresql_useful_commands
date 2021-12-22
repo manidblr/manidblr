@@ -117,7 +117,9 @@ select now() as current;
 select (now() + interval '1 hour') as an_hour_later;
 
 
-
+Auto Vaccum is enabled by default at table level. Auto Vaccum Deamon runs automatically after certain amount of transactions.
+Disable:   alter table tel_directory set (autovaccum_enabled=false);
+Verify:   select reloptions from pg_class where relname='tel_directory';
 
 
 
